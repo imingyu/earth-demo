@@ -17,6 +17,7 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(4.5, 2, 3);
+    // camera.position.set(0,0,0);
 
     scene = new THREE.Scene();
 
@@ -113,28 +114,28 @@ function init() {
 
     // debug
 
-    const gui = new GUI();
+    // const gui = new GUI();
 
-    gui
-        .addColor({ color: atmosphereDayColor.value.getHex(THREE.SRGBColorSpace) }, 'color')
-        .onChange((value) => {
+    // gui
+    //     .addColor({ color: atmosphereDayColor.value.getHex(THREE.SRGBColorSpace) }, 'color')
+    //     .onChange((value) => {
 
-            atmosphereDayColor.value.set(value);
+    //         atmosphereDayColor.value.set(value);
 
-        })
-        .name('atmosphereDayColor');
+    //     })
+    //     .name('atmosphereDayColor');
 
-    gui
-        .addColor({ color: atmosphereTwilightColor.value.getHex(THREE.SRGBColorSpace) }, 'color')
-        .onChange((value) => {
+    // gui
+    //     .addColor({ color: atmosphereTwilightColor.value.getHex(THREE.SRGBColorSpace) }, 'color')
+    //     .onChange((value) => {
 
-            atmosphereTwilightColor.value.set(value);
+    //         atmosphereTwilightColor.value.set(value);
 
-        })
-        .name('atmosphereTwilightColor');
+    //     })
+    //     .name('atmosphereTwilightColor');
 
-    gui.add(roughnessLow, 'value', 0, 1, 0.001).name('roughnessLow');
-    gui.add(roughnessHigh, 'value', 0, 1, 0.001).name('roughnessHigh');
+    // gui.add(roughnessLow, 'value', 0, 1, 0.001).name('roughnessLow');
+    // gui.add(roughnessHigh, 'value', 0, 1, 0.001).name('roughnessHigh');
 
     // renderer
 
@@ -176,16 +177,16 @@ function init() {
 
     return {
         renderer,
-        scene,
-        camera,
-        controls,
-        globe,
-        sun,
-        atmosphereMaterial,
-        atmosphereDayColor,
-        atmosphereTwilightColor,
-        roughnessLow,
-        roughnessHigh
+        // scene,
+        // camera,
+        // controls,
+        // globe,
+        // sun,
+        // // atmosphereMaterial,
+        // atmosphereDayColor,
+        // atmosphereTwilightColor,
+        // roughnessLow,
+        // roughnessHigh
     }
 }
 
