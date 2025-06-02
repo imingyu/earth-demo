@@ -1,0 +1,44 @@
+[
+  {
+    "idc": 6060,
+    "portname": "Los Angeles",
+    "lat": 33.7405,
+    "lng": -118.2775
+  },
+  {
+    "idc": 6061,
+    "portname": "Savannah",
+    "lat": 32.0809,
+    "lng": -81.0912
+  },
+  {
+    "idc": 6088,
+    "portname": "New York",
+    "lat": 40.684,
+    "lng": -74.0419
+  },
+  {
+    "idc": 7042,
+    "portname": "Houston",
+    "lat": 29.728,
+    "lng": -95.0865
+  },
+  {
+    "idc": 7067,
+    "portname": "New Orleans",
+    "lat": 29.9426,
+    "lng": -90.0848
+  },
+  {
+    "idc": 7078,
+    "portname": "Chicago",
+    "lat": 41.8379,
+    "lng": -87.6828
+  },
+  {
+    "idc": 8980,
+    "portname": "Oakland",
+    "lat": 37.795,
+    "lng": -122.278
+  }
+]

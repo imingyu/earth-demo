@@ -63,7 +63,7 @@ function init() {
             {
                 ...uniforms,
                 nightTexture: { value: nightTexture },
-                roughnessMap: { value: bumpRoughnessCloudsTexture }
+                // 移除重复的roughnessMap声明
             }
         ]);
     
@@ -82,7 +82,7 @@ function init() {
             `
         );
     
-        // 片元着色器修改（关键修复）
+        // 片元着色器关键修复
         shader.fragmentShader = shader.fragmentShader
             .replace(
                 'void main() {',
@@ -93,41 +93,48 @@ function init() {
                 uniform float roughnessHigh;
                 uniform vec3 sunPosition;
                 uniform sampler2D nightTexture;
-                uniform sampler2D roughnessMap;
                 
                 varying vec3 vCustomNormal;
                 varying vec3 vCustomViewDirection;
                 varying vec2 vCustomUv;
                 
                 void main() {
-                    // 原始颜色
                     vec4 diffuseColor = vec4( diffuse, opacity );
                     
-                    // 云层强度
+                    // 使用Three.js内置的roughnessMap
                     float cloudsStrength = smoothstep(0.2, 1.0, texture2D(roughnessMap, vCustomUv).b);
                     
-                    // 混合日夜纹理
+                    // 日夜混合
                     vec3 nightColor = texture2D(nightTexture, vCustomUv).rgb;
                     vec3 sunDir = normalize(sunPosition);
                     float sunOrientation = dot(vCustomNormal, sunDir);
                     float dayStrength = smoothstep(-0.25, 0.5, sunOrientation);
                     vec3 finalColor = mix(nightColor, diffuseColor.rgb, dayStrength);
                     
-                    // 大气层效果
+                    // 大气效果
                     float fresnel = pow(1.0 - dot(vCustomNormal, vCustomViewDirection), 2.0);
-                    vec3 atmosphereColor = mix(atmosphereTwilightColor, atmosphereDayColor, smoothstep(-0.25, 0.75, sunOrientation));
+                    vec3 atmosphereColor = mix(atmosphereTwilightColor, atmosphereDayColor, 
+                        smoothstep(-0.25, 0.75, sunOrientation));
                     float atmosphereMix = smoothstep(-0.5, 1.0, sunOrientation) * fresnel;
                     finalColor = mix(finalColor, atmosphereColor, clamp(atmosphereMix, 0.0, 1.0));
                     
-                    // 粗糙度调整
-                    float roughness = max(texture2D(roughnessMap, vCustomUv).g, step(0.01, cloudsStrength));
-                    roughnessFactor = mix(roughnessLow, roughnessHigh, roughness);
+                    // 粗糙度处理
+                    float baseRoughness = texture2D(roughnessMap, vCustomUv).g;
+                    float adjustedRoughness = mix(roughnessLow, roughnessHigh, 
+                        max(baseRoughness, step(0.01, cloudsStrength)));
                     
+                    // 最终输出
                     diffuseColor.rgb = finalColor;
+                    gl_FragColor = diffuseColor;
+                    
+                    // 通过内置变量传递粗糙度
+                    roughnessFactor = adjustedRoughness;
                 `
             )
-            // 移除原来的vec4 diffuseColor声明
-            .replace('vec4 diffuseColor = vec4( diffuse, opacity );', '');
+            // 移除原有声明
+            .replace(/vec4 diffuseColor = vec4\( diffuse, opacity \);/g, '')
+            // 修复内置变量赋值
+            .replace('roughnessFactor = roughness;', '');
     };
 
     // 地球网格
