@@ -3,6 +3,7 @@ import { ShaderMaterial, TextureLoader, Vector2 } from "three";
 import earth_day from '../assets/2k_earth_day.jpg';
 import earth_night from '../assets/2k_earth_night.jpg';
 import Gaia_EDR3_darkened from '../assets/Gaia_EDR3_darkened.png';
+import marble from '../assets/earth-blue-marble.jpg';
 import * as solar from 'solar-calculator';
 
 
@@ -77,7 +78,7 @@ export const setMaterial = (globe: GlobeInstance) => {
     globe.backgroundImageUrl(Gaia_EDR3_darkened);
 
     let dt = +new Date();
-    const dayTexture = loader.load(earth_day);
+    const dayTexture = loader.load(marble);
     const nightTexture = loader.load(earth_night);
     const material = new ShaderMaterial({
         uniforms: {

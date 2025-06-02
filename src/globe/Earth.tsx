@@ -5,6 +5,7 @@ import type { RouteInfo } from "./type";
 import { setMaterial } from "./settings/material";
 import { convertArcs, setArcs } from "./settings/arc";
 import { convertLabels, setLabels } from "./settings/label";
+import { applyControls } from "./settings/control";
 
 export const GlobeEarth = (props: {
     routes: RouteInfo[];
@@ -21,6 +22,7 @@ export const GlobeEarth = (props: {
     useEffect(() => {
         refGlobe.current = initGlobe(refContainer.current!);
         setMaterial(refGlobe.current);
+        applyControls(refGlobe.current);
         setGlobe()
     }, []);
 
